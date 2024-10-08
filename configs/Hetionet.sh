@@ -1,5 +1,5 @@
-input_dir="datasets/Hetionet/"
-base_output_dir="output/Hetionet/"
+input_dir="/kaggle/input/polo-datasets/Hetionet-DB-DB/Hetionet-DB-DB/"
+base_output_dir="/kaggle/output/Hetionet/"
 total_iterations=1000
 eval_every=10
 patience=2
@@ -15,5 +15,5 @@ max_num_actions=400
 train_entity_embeddings=1
 use_entity_embeddings=1
 num_rollouts=30
-load_model=1
+load_model=0
 model_load_path="/home/ubuntu/PoLo/models/Hetionet/model.ckpt"
