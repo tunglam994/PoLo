@@ -44,17 +44,20 @@ class Agent(object):
         with tf.compat.v1.variable_scope('policy_step'):
             cells = []
             for _ in range(self.LSTM_Layers):
-                cells.append(tf.compat.v1.nn.rnn_cell.LSTMCell(self.m * self.hidden_size, use_peepholes=True,
-                                                     state_is_tuple=True))
-            self.policy_step = tf.compat.v1.nn.rnn_cell.MultiRNNCell(cells, state_is_tuple=True)
+                # cells.append(tf.compat.v1.nn.rnn_cell.LSTMCell(self.m * self.hidden_size, use_peepholes=True, state_is_tuple=True, dtype=tf.float32))
+                cells.append(tf.keras.layers.LSTMCell(self.m * self.hidden_size, dtype=tf.float32))
+            # self.policy_step = tf.compat.v1.nn.rnn_cell.MultiRNNCell(cells, state_is_tuple=True)
+            self.policy_step = tf.keras.layers.StackedRNNCells(cells, dtype=tf.float32)
 
     def get_mem_shape(self):
         return self.LSTM_Layers, 2, None, self.m * self.hidden_size
 
     def policy_MLP(self, state):
         with tf.compat.v1.variable_scope('MLP_for_policy'):
-            hidden = tf.compat.v1.layers.dense(state, 4 * self.hidden_size, activation=tf.nn.relu)
-            output = tf.compat.v1.layers.dense(hidden, self.m * self.embedding_size, activation=tf.nn.relu)
+            # hidden = tf.compat.v1.layers.dense(state, 4 * self.hidden_size, activation=tf.nn.relu)
+            hidden = tf.keras.layers.Dense(4 * self.hidden_size, activation=tf.nn.relu)(state)
+            # output = tf.compat.v1.layers.dense(hidden, self.m * self.embedding_size, activation=tf.nn.relu)
+            output = tf.keras.layers.Dense(self.m * self.embedding_size, activation=tf.nn.relu)(hidden)
         return output
 
     def action_encoder(self, next_relations, next_entities):
@@ -109,7 +112,8 @@ class Agent(object):
     def __call__(self, candidate_relation_sequence, candidate_entity_sequence, current_entities,
                  query_relations, range_arr, path_length):
         query_embeddings = tf.compat.v1.nn.embedding_lookup(params=self.relation_lookup_table, ids=query_relations)
-        states = self.policy_step.zero_state(batch_size=self.batch_size, dtype=tf.float32)
+        # states = self.policy_step.zero_state(batch_size=self.batch_size, dtype=tf.float32)
+        states = self.policy_step.get_initial_state(batch_size=self.batch_size)
         prev_relations = self.dummy_start_labels
         all_loss = []
         all_logits = []
