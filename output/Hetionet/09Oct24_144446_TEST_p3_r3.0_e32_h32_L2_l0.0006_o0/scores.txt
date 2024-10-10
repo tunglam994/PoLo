@@ -1,0 +1,19 @@
+Test (beam) scores with best model from output/Hetionet/09Oct24_143445_p3_r3.0_e32_h32_L2_l0.0006_o0/model/model.ckpt
+Tail:
+Hits@1:  0.2649
+Hits@3:  0.3775
+Hits@5:  0.4238
+Hits@10:  0.5828
+Hits@20:  0.6954
+MRR:  0.3539
+Hits@1_rule:  0.2781
+Hits@3_rule:  0.4371
+Hits@5_rule:  0.5497
+Hits@10_rule:  0.6358
+Hits@20_rule:  0.7152
+MRR_rule:  0.3911
+Rule count body: 4939/15100 = 0.3271
+Rule count correct: 905/15100 = 0.0599
+Number of queries with at least one rule: 149/151 = 0.9868
+Number of queries with at least one rule and correct: 108/151 = 0.7152
+
