@@ -1,4 +1,4 @@
-input_dir="/kaggle/input/polo-datasets/DRKG_DB_20_10"
+input_dir="/kaggle/input/polo-datasets/DRKG_DB_20_10/"
 base_output_dir="/kaggle/output/DRKG_20_10/"
 total_iterations=1000
 eval_every=10
