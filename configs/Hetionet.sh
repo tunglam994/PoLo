@@ -1,5 +1,5 @@
-input_dir="/kaggle/input/polo-new-data/DDI_Polo_new/option1/"
-base_output_dir="/kaggle/output/option1/"
+input_dir="/kaggle/input/polo-new-data/DDI_Polo_new/option2/"
+base_output_dir="/kaggle/output/option2/"
 total_iterations=1000
 eval_every=10
 patience=2
