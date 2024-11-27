@@ -1,5 +1,5 @@
 input_dir="/kaggle/input/polo-new-data/DDI_Polo_new/option2/"
-base_output_dir="/kaggle/output/option2/"
+base_output_dir="output/option2/"
 total_iterations=1000
 eval_every=10
 patience=2
@@ -15,6 +15,5 @@ max_num_actions=400
 train_entity_embeddings=1
 use_entity_embeddings=1
 num_rollouts=30
-path_length=5
 load_model=0
 model_load_path="/home/ubuntu/PoLo/models/Hetionet/model.ckpt"
