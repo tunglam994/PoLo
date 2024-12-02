@@ -364,11 +364,33 @@ class Trainer(object):
         return answers
 
     def write_paths_file(self, answers):
+        # Original code for saving all paths
         for q in self.paths:
             j = q.replace('/', '-')
             with codecs.open(self.paths_log + '_' + j, 'a', 'utf-8') as pos_file:
                 for p in self.paths[q]:
                     pos_file.write(p)
+        
+        # New code to save only correct paths
+        with codecs.open(self.paths_log + '_correct_paths.txt', 'w', 'utf-8') as correct_file:
+            for q in self.paths:
+                path_data = self.paths[q]
+                i = 0
+                while i < len(path_data):
+                    # Check if this is the start of a path block
+                    if '\t' in path_data[i]:  # This is start/end entity line
+                        reward_line = path_data[i + 1]
+                        if 'Reward:1' in reward_line:  # This is a correct path
+                            # Write query relation
+                            correct_file.write(f"Query: {q}\n")
+                            # Write the path block
+                            while i < len(path_data) and '#####################' not in path_data[i]:
+                                correct_file.write(path_data[i])
+                                i += 1
+                            correct_file.write('#####################\n')
+                    i += 1
+
+        # Original code for saving answers
         with open(self.paths_log + 'answers', 'w') as answer_file:
             for a in answers:
                 answer_file.write(a)
